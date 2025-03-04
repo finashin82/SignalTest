@@ -1,15 +1,18 @@
 using UnityEngine;
 using Zenject;
 
-public class GameInstaller : MonoInstaller
+public class GameInstaller : MonoInstaller<GameInstaller>
 {
     public override void InstallBindings()
     {
-        // Регистрируем сигнал
-        Container.DeclareSignal<PlayerAttackSignal>();
+        // Устанавливаем сигнал
+        SignalBusInstaller.Install(Container);
 
-        // Регистрируем Player и Enemy
-        Container.Bind<Player>().AsSingle();
-        Container.Bind<Enemy>().AsSingle();
+        // Регистрируем сигнал
+        Container.DeclareSignal<ButtonClickedSignal>();
+
+        // Регистрируем ButtonScript и ReceiverScript
+        Container.Bind<ButtonScript>().AsSingle();
+        Container.Bind<ReceiverScript>().AsSingle();
     }
 }
